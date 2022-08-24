@@ -7,7 +7,7 @@ Bu koordinatlarını belirlediğimiz dört noktayı diğer bir fonksiyonumuz ola
 
 ROİ belirlememizi sebebi ise çizgi algılama işlemini yaparken bilgisayarımızın video karesinde ilgilenmediğimiz alanlara odaklanmamasını sağlayarak işlem süresini kısaltıyoruz ama asıl sebeplerinden biri de kare içinde kalan değişik bölgelerde gökyüzünde, tünellerde, aracımızın karşısındaki dağlarda yollarda vb. yerlerde anlamsız çizgiler algılamasının önüne geçmektir.
 
-<img src="https://github.com/ahmetnihat/serit_takip_sistemi/blob/main/images/original_road.PNG" width="400"> <img src="https://github.com/ahmetnihat/serit_takip_sistemi/blob/main/images/cropped_road.PNG" width="400">
+<img src="https://github.com/ahmetnihat/serit_takip_sistemi/blob/main/images/original_road.PNG" width="350"> <img src="https://github.com/ahmetnihat/serit_takip_sistemi/blob/main/images/cropped_road.PNG" width="350">
 
 original_road ve cropped_road'da görüldüğü üzere orijinal yolumuz ve belirlediğimiz 4 köşesine göre maskelenmiş yolumuz yukarıda verilmiştir.
 
@@ -15,6 +15,6 @@ original_road ve cropped_road'da görüldüğü üzere orijinal yolumuz ve belir
 
 Son fonksiyonumuz ise “detect_lines_and_process” fonksiyonumuzdur. Artık bu fonksiyonumuzda tüm işlemlerimizi bitirip karemizi işleyip bu kareyi bize değer olarak döndürmektir. Fonksiyonumuz direkt videodan okuduğumuz kareyi içine alarak önce blurlama işlemi yapmaktadır. Bu blurlama işlemini Opencv kütüphanesinden GaussianBlur fonksiyonu ile yapmaktayız. Blurlama yapmamızın amacı resmi yumuşatmak ve resimdeki keskinlikleri azaltıp bilgisayarımızın daha kolay bir algılama işlemi yapmasını sağlamaktır. Yumuşatma işlemimizden sonra yumuşatma yaptığımız kareyinin renigini RGB formatından GRAY formatına çeviriyoruz Opencv aracılığıyla yaptığımız bu işlemde amacımız bundan sonra kullanacağımız ayrıt algılama fonksiyonumuz olan Canny’i kullanabilmek. Canny fonksiyonumuz ile ayrıtlarımızı da algıladıktan sonra karemizdeki kırpma işlemini yapıyoruz yukarıda yazdığımız “calculate_measures_4roi” fonksiyonumuz ve Numpy kütüphanemiz sayesinde, çizgilerimizi de bu işlemden sonra algılıyoruz. Opencv içindeki HoughLinesP fonksiyonumuz ile kesilmiş resmimiz üzerinde çizgilerimizi saptıyoruz. Fonksiyonumuzdaki son işlem ise çalışma prensibini açıkladığımız yine kendi yazdığımız “drow_the_lines” fonksiyonunu çağırmaktır. İşlemlerimiz tamamlandıktan sonra işlenmiş karemizi döndürerek fonksiyonumuz bitiriyoruz.
 
-<img src="https://github.com/ahmetnihat/serit_takip_sistemi/blob/main/images/processed_road.PNG" width="750">
+<img src="https://github.com/ahmetnihat/serit_takip_sistemi/blob/main/images/processed_road.PNG" width="600">
 
 Kodumuzun son kısmı olarak while ile son videomuzun okunduğu müddetçe çalışacak bir döngü oluşturuyoruz. Opencv kütüphanemiz yardımıyla videomuzu sırayla okuyor, orijinal resmi ekrana yansıtıyor, “detect_lines_and_process” fonksiyonumuz ile karemizi işliyor time kütüphanemiz ile 0.01 saniye uyutuyor, resmimizi kırparak kırptığımız resmi ekrana yansıtıyor, son olarak da işlenmiş karemizi ekrana yansıtıyoruz. İstediğimiz bir anda işlemi bitirmek için de if anahtar kelimemiz ile “q” tuşuna basılıp basılmadığını kontrol ediyoruz.
